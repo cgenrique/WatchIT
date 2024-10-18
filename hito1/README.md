@@ -36,3 +36,22 @@ En cuanto a la base de datos, se opta por una BD de tipo NoSQL como es el caso d
 Se hará uso de la API de [TMDb (The Movie Database)](https://www.themoviedb.org/documentation/api). Esta API gratuita nos proporciona datos sobre gran variedad de series y películas.
 
 En lo relativo al frontend, se intentará realizarlo haciendo uso de React.
+
+## Configuración del entorno⚙️
+
+En cuanto a la configuración del entorno de trabajo. Se ha configurado tanto el nombre como el email que se va a usar en git.
+
+![image](https://github.com/user-attachments/assets/2952f685-6c6f-4788-90e9-601f603b3294)
+
+Se han implementado las claves de acceso remoto (SSH) para poder subir los cambios al repositorio con facilidad.
+
+![image](https://github.com/user-attachments/assets/05c27701-11b5-4e7c-a77a-9143bb90f508)
+
+También está completa la información del perfil de github, con foto y nombre completo.
+
+![image](https://github.com/user-attachments/assets/75445d11-1772-4965-b5ef-4c6764d04406)
+
+También está configurado el doble factor de autentificación cuando se inicia sesión. Haciendo uso de una aplicación móvil de generación de códigos para autenficicación (Google Authenticator)
+
+![image](https://github.com/user-attachments/assets/1f16cb0f-fedf-4f92-ba91-cd5fec6dbe43)
+
