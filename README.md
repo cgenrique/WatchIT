@@ -2,7 +2,7 @@
 **WatchIT** es una plataforma que forma parte de las prácticas de la asignatura de Cloud Computing del Master Universitario de Ingeniería Informática (MUII) de la Universidad de Granada
 
 # Enlaces a los hitos🔗
-- [Hito 1](/hito1/)
+- [Hito 1](/docs/hito1/)
 
 ## Descripción del Proyecto
 WatchIT es una plataforma para la gestión y recomendación de películas y series de televisión. Que permite a los usuarios crear y organizar sus títulos favoritos en listas personalizadas (como "Pendiente de ver", "Vistas", "Favoritas"...). Y ofrece recomendaciones basadas en sus preferencias de visualización.

@@ -1,6 +1,6 @@
 # 🍿WatchIT📽️ - Hito 1
 
-Como ya se describe en el [README](../README.md) del repositorio. Se realizará el desarrollo de una plataforma que permita a cinéfilos y seriéfilos la organización de sus títulos favoritos. Además de recomendarles contenido en función de sus preferencias.
+Como ya se describe en el [README](../../README.md) del repositorio. Se realizará el desarrollo de una plataforma que permita a cinéfilos y seriéfilos la organización de sus títulos favoritos. Además de recomendarles contenido en función de sus preferencias.
 
 El Hito 1 del proyecto **WatchIT** consiste en la creación del repositorio de prácticas, la configuración del entorno de desarrollo, y la definición del problema que se va a resolver. Aquí se establecerá la estructura inicial del repositorio.
 
