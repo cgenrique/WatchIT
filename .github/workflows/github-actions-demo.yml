@@ -1,4 +1,4 @@
-name: CI Pipeline for WatchIT
+name: Run Tests
 
 on:
   push:
@@ -9,26 +9,25 @@ on:
       - main
 
 jobs:
-  run-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository code
-        uses: actions/checkout@v4
+      - name: Check out the code
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
           python -m venv .venv
-          source .venv/bin/activate
+          . .venv/bin/activate
           pip install -r requirements.txt
-          pip install -e .
 
-      - name: Run tests with pytest
+      - name: Run tests
         run: |
-          source .venv/bin/activate
-          pytest tests/
+          . .venv/bin/activate
+          pytest
