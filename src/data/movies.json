@@ -34,5 +34,23 @@
         "rating": 7.8,
         "title": "Tenet",
         "id": 6
+    },
+    {
+        "genre": "Sci-Fi",
+        "rating": 7.8,
+        "title": "Tenet",
+        "id": 7
+    },
+    {
+        "genre": "Sci-Fi",
+        "rating": 7.8,
+        "title": "Tenet",
+        "id": 8
+    },
+    {
+        "genre": "Sci-Fi",
+        "rating": 7.8,
+        "title": "Tenet",
+        "id": 9
     }
 ]
