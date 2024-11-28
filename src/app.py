@@ -2,23 +2,11 @@ import os
 from flask import Flask, jsonify, request
 import json
 
+from src.services.movie_service import MovieService
+
 app = Flask(__name__)
 
-def load_data():
-    """
-    Load movie data from a JSON file.
-
-    Returns:
-        list: A list of movie dictionaries loaded from the JSON file.
-    """
-    
-    # Get the directory where this script is located
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    # Build the path to the JSON file
-    file_path = os.path.join(base_dir, "data", "movies.json")
-    with open(file_path, "r") as file:
-        return json.load(file)
-
+movie_service = MovieService()
 
 @app.route('/')
 def index():
@@ -38,7 +26,7 @@ def get_movies():
     Returns:
         JSON: A list of movies.
     """
-    movies = load_data()
+    movies = movie_service.get_all_movies()
     return jsonify(movies)
     
 @app.route('/movies/<int:movie_id>', methods=['GET'])
@@ -52,8 +40,7 @@ def get_movie(movie_id):
     Returns:
         JSON: The movie data if found, or an error message if not.
     """
-    movies = load_data()
-    movie = next((m for m in movies if m['id'] == movie_id), None)
+    movie = movie_service.get_movie_by_id(movie_id)
     if movie:
         return jsonify(movie)
     return jsonify({"error": "Movie not found"}), 404
@@ -66,13 +53,14 @@ def add_movie():
     Returns:
         JSON: The newly added movie data.
     """
-    new_movie = request.get_json()
-    movies = load_data()
-    new_movie['id'] = len(movies) + 1
-    movies.append(new_movie)
-    with open("src/data/movies.json", "w") as file:
-        json.dump(movies, file, indent=4)
-    return jsonify(new_movie), 201
+    
+    try:
+        new_movie = request.get_json()
+        added_movie = movie_service.add_movie(new_movie)
+        return jsonify(added_movie), 201
+    
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)

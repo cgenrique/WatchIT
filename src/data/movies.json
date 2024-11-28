@@ -52,5 +52,63 @@
         "rating": 7.8,
         "title": "Tenet",
         "id": 9
+    },
+    {
+        "title": "Inception",
+        "genre": "Sci-Fi",
+        "rating": 8.8,
+        "id": 10
+    },
+    {
+        "genre": "Sci-Fi",
+        "rating": 7.8,
+        "title": "Tenet",
+        "id": 11
+    },
+    {
+        "title": "Incomplete Movie",
+        "id": 12
+    },
+    {
+        "genre": "Crime",
+        "rating": 9.7,
+        "title": "The Godfather",
+        "id": 13
+    },
+    {
+        "genre": "Sci-Fi",
+        "rating": 7.8,
+        "title": "Tenet",
+        "id": 14
+    },
+    {
+        "genre": "Crime",
+        "rating": 9.7,
+        "title": "The Godfather",
+        "id": 15
+    },
+    {
+        "genre": "Sci-Fi",
+        "rating": 7.8,
+        "title": "Tenet",
+        "id": 16
+    },
+    {
+        "genre": "Crime",
+        "rating": 9.7,
+        "title": "The Godfather",
+        "id": 17
+    },
+    {
+        "genre": "Sci-Fi",
+        "rating": 7.8,
+        "title": "Tenet",
+        "id": 18
+    },
+    {
+        "genre": "Crime",
+        "rating": 9.7,
+        "title": "The Godfather",
+        "id": 19
     }
 ]

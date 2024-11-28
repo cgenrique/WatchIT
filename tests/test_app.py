@@ -41,6 +41,8 @@ def test_get_movies(client):
     response = client.get('/movies')
     assert response.status_code == 200
     assert isinstance(response.json, list)
+    assert len(response.json) > 0  # Check that there's at least one movie
+
     
 def test_get_movie(client):
     """
@@ -87,3 +89,50 @@ def test_add_movie(client):
     response = client.post('/movies', json=new_movie)
     assert response.status_code == 201
     assert response.json['title'] == "Tenet"
+    
+def test_add_movie_invalid_data(client):
+    """
+    Test adding a movie with missing fields.
+
+    Args:
+        client: The test client fixture.
+
+    Asserts:
+        The status code is 400.
+        The response JSON contains an error message.
+    """
+    incomplete_movie = {"title": "Incomplete Movie"}
+    response = client.post('/movies', json=incomplete_movie)
+    assert response.status_code == 400
+    assert "error" in response.json
+    
+def test_add_movie_invalid_rating(client):
+    """
+    Test adding a movie with an invalid rating.
+
+    Args:
+        client: The test client fixture.
+
+    Asserts:
+        The status code is 400.
+        The response JSON contains an error message.
+    """
+    invalid_movie = {"title": "Invalid Rating", "genre": "Drama", "rating": 15}
+    response = client.post('/movies', json=invalid_movie)
+    assert response.status_code == 400
+    assert "Rating must be between 0 and 10" in response.json["error"]
+
+def test_add_movie_duplicate(client):
+    """
+    Test adding a duplicate movie.
+
+    Args:
+        client: The test client fixture.
+
+    Asserts:
+        The status code is 201 (duplicates are allowed since they have unique IDs).
+    """
+    duplicate_movie = {"title": "The Godfather", "genre": "Crime", "rating": 9.7}
+    response = client.post('/movies', json=duplicate_movie)
+    assert response.status_code == 201
+    assert response.json['title'] == "The Godfather"
