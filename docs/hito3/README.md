@@ -114,3 +114,33 @@ Se ha configurado un sistema de logging para registrar la actividad de la API y 
     "rating": 8.8
 }
 ```
+
+## 🔍 Gestión de inconsistencias y validaciones
+
+Se han implementado un sistema de validaciones para garantizar que los datos enviados al servidor sean correctos y consistentes. Esto evita la inserción de películas con campos faltantes o valores inválidos.
+
+### Validaciones implementadas
+1. **Campos requeridos:**
+   - Antes de añadir una película, se valida que incluya los siguientes campos:
+     - `title`: Título de la película.
+     - `genre`: Género de la película.
+     - `rating`: Calificación de la película.
+   - Si alguno de estos campos falta, el servidor devuelve un error `400 Bad Request` con un mensaje indicando el campo que falta.
+
+   **Ejemplo de validación de campos de una película:**
+   ```python
+    # Check if the movie data is valid
+        self.logger.info(f"Validating movie data: {new_movie}")        
+        required_fields = ["title", "genre", "rating"]
+        for field in required_fields:
+            if field not in new_movie:
+                self.logger.error(f"Missing required field: {field}")
+                raise ValueError(f"Missing required field: {field}")
+
+   # Check if the rating is between 0 and 10
+        rating = new_movie["rating"]
+        if not (0 <= rating <= 10):
+            self.logger.error(f"Invalid rating: {new_movie['rating']}")
+            raise ValueError("Rating must be between 0 and 10")
+   ```
+
