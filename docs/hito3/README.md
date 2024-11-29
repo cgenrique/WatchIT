@@ -79,5 +79,20 @@ def add_movie(self, new_movie):
         self.save_data(movies)
         return new_movie
 ```
+## 🪵 Implementación de Logs
 
+Se ha configurado un sistema de logging para registrar la actividad de la API y las operaciones en la lógica de negocio. Los registros se almacenan en la carpeta `logs/` en la raíz del proyecto.
 
+### 📂 Ubicación de los Logs
+- **Carpeta:** `logs/`
+- **Archivo:** `logs/watchit.log`
+- Esta carpeta está excluida del repositorio mediante el archivo `.gitignore`.
+
+#### 📚 Ejemplo de Logs
+```plaintext
+2024-11-28 05:32:28,453 - WatchIT - INFO - Fetching movie with ID: 5
+2024-11-28 05:32:28,453 - MovieService - INFO - Loading movie data from JSON file
+2024-11-28 05:32:42,208 - WatchIT - INFO - Attempting to add new movie: {'title': 'Gladiator', 'genre': 'Sci-Fi', 'rating': 8.9}
+2024-11-28 05:32:42,222 - MovieService - INFO - Movie added successfully with ID: 22
+2024-11-28 05:32:42,223 - WatchIT - INFO - Successfully added movie with ID: 22
+```
