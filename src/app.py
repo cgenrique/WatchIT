@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 import json
 import logging
 
-from services.movie_service import MovieService
+from src.services.movie_service import MovieService
 
 
 app = Flask(__name__)
