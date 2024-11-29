@@ -1,3 +1,4 @@
+import logging
 import os
 import json
 
@@ -9,6 +10,8 @@ class MovieService:
         # Get the directory where this script is located
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.file_path = os.path.join(self.base_dir, "../data/movies.json")
+        self.logger = logging.getLogger("MovieService")
+
 
     def load_data(self):
         """
@@ -17,6 +20,7 @@ class MovieService:
         Returns:
             list: List of movies loaded from the JSON file.
         """
+        self.logger.info("Loading movie data from JSON file")        
         with open(self.file_path, "r") as file:
             return json.load(file)
 
@@ -27,6 +31,7 @@ class MovieService:
         Args:
             movies (list): List of movies to save.
         """
+        self.logger.info("Saving movie data to JSON file")        
         with open(self.file_path, "w") as file:
             json.dump(movies, file, indent=4)
 
@@ -66,14 +71,17 @@ class MovieService:
             ValueError: If the movie data is invalid.
         """
         # Check if the movie data is valid
+        self.logger.info(f"Validating movie data: {new_movie}")        
         required_fields = ["title", "genre", "rating"]
         for field in required_fields:
             if field not in new_movie:
+                self.logger.error(f"Missing required field: {field}")
                 raise ValueError(f"Missing required field: {field}")
         
         # Check if the rating is between 0 and 10
         rating = new_movie["rating"]
         if not (0 <= rating <= 10):
+            self.logger.error(f"Invalid rating: {new_movie['rating']}")
             raise ValueError("Rating must be between 0 and 10")
         
         # If the data is valid, add the movie
@@ -81,4 +89,5 @@ class MovieService:
         new_movie['id'] = len(movies) + 1
         movies.append(new_movie)
         self.save_data(movies)
+        self.logger.info(f"Movie added successfully with ID: {new_movie['id']}")
         return new_movie
