@@ -96,3 +96,21 @@ Se ha configurado un sistema de logging para registrar la actividad de la API y 
 2024-11-28 05:32:42,222 - MovieService - INFO - Movie added successfully with ID: 22
 2024-11-28 05:32:42,223 - WatchIT - INFO - Successfully added movie with ID: 22
 ```
+## 📚 Documentación de la API
+
+### Endpoints implementados:
+| Método | Ruta               | Descripción                              |
+|--------|--------------------|------------------------------------------|
+| `GET`  | `/movies`          | Devuelve la lista de películas.          |
+| `GET`  | `/movies/<id>`     | Devuelve los datos de una película por ID. |
+| `POST` | `/movies`          | Añade una nueva película.                |
+
+#### Ejemplo: `POST /movies`
+**Request Body:**
+```json
+{
+    "title": "Inception",
+    "genre": "Sci-Fi",
+    "rating": 8.8
+}
+```
