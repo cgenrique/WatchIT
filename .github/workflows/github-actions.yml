@@ -54,10 +54,9 @@ jobs:
           source .venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Set up writable logs directory
+      - name: Set environment variable for tests
         run: |
-          mkdir -p logs
-          chmod -R 777 logs
+          export TEST_ENV=true
 
       - name: Run tests
         run: |

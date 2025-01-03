@@ -1,6 +1,7 @@
 import os
 from flask import Flask, jsonify, request
 import logging
+import tempfile
 
 from pymongo import MongoClient
 
@@ -16,8 +17,14 @@ db = client["watchit_db"]
 movie_service = MovieService(db["movies"])
 
 #Create a logs directory if it doesn't exist
-log_dir = "logs"
-os.makedirs(log_dir, exist_ok=True)
+# Log directory configuration
+if os.getenv("TEST_ENV"):
+    log_dir = tempfile.gettempdir()  # Use temporary directory for logs in test environment
+else:
+    log_dir = "logs"
+    os.makedirs(log_dir, exist_ok=True)
+    
+log_file = os.path.join(log_dir, "watchit.log")
 
 # Basic logging configuration
 logging.basicConfig(
@@ -25,7 +32,7 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
         logging.StreamHandler(),  # Display logs in the console
-        logging.FileHandler(os.path.join(log_dir, "watchit.log"))  #  Save logs to a file
+        logging.FileHandler(log_file)  #  Save logs to a file
     ]
 )
 
