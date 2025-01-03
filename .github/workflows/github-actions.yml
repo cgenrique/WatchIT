@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run Tests and Push Docker Image
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +21,21 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Log in to GitHub Docker Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/watchit:latest .
+
+      - name: Push Docker Image to GitHub Packages
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/watchit:latest
+
       - name: Set up Docker Compose
         run: |
-          docker-compose up -d  # Start all containers in the background
-          sleep 10  # Wait a few seconds to ensure MongoDB is ready
+          docker-compose up -d 
+          sleep 10
 
       - name: Install dependencies
         run: |
@@ -39,4 +50,4 @@ jobs:
 
       - name: Tear down Docker Compose
         if: always()
-        run: docker-compose down # Stop and remove all containers
+        run: docker-compose down
