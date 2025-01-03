@@ -1,4 +1,4 @@
-name: Run Tests and Push Docker Image
+name: Build, Test, and Push Docker Image
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
           python-version: "3.x"
 
       - name: Log in to GitHub Docker Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.PERSONAL_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Install Docker Compose
         run: |
@@ -31,7 +31,9 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/watchit:latest -f Dockerfile .
+          docker build \
+            -t ghcr.io/${{ github.repository_owner }}/watchit:latest \
+            -f Dockerfile .
 
       - name: Push Docker Image to GitHub Packages
         run: |
