@@ -24,9 +24,14 @@ jobs:
       - name: Log in to GitHub Docker Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
       - name: Build Docker Image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/watchit:latest .
+          docker build -t ghcr.io/${{ github.repository_owner }}/watchit:latest -f Dockerfile .
 
       - name: Push Docker Image to GitHub Packages
         run: |
