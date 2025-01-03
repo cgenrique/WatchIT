@@ -2,9 +2,7 @@ import os
 from flask import Flask, jsonify, request
 import logging
 import tempfile
-
 from pymongo import MongoClient
-
 from services.movie_service import MovieService
 
 
