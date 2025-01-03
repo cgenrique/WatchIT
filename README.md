@@ -7,6 +7,7 @@
 - [Hito 1](/docs/hito1/)
 - [Hito 2](/docs/hito2/)
 - [Hito 3](/docs/hito3/)
+- [Hito 4](/docs/hito4/)
 
 
 ## Descripción del Proyecto
