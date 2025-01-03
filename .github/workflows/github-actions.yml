@@ -1,4 +1,4 @@
-name: Build, Test, and Push Docker Image
+name: Run Tests and Push Docker Image
 
 on:
   push:
@@ -21,27 +21,26 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Log in to GitHub Docker Registry
-        run: echo "${{ secrets.PERSONAL_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Install Docker Compose
+      - name: Install Docker and Docker Compose
         run: |
           sudo apt-get update
-          sudo apt-get install -y docker-compose
+          sudo apt-get install -y docker.io
+          sudo apt-get install -y docker-compose-plugin
+
+      - name: Log in to GitHub Docker Registry
+        env:
+          CR_PAT: ${{ secrets.CR_PAT }}
+        run: echo "${CR_PAT}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build Docker Image
-        run: |
-          docker build \
-            -t ghcr.io/${{ github.repository_owner }}/watchit:latest \
-            -f Dockerfile .
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/watchit:latest .
 
       - name: Push Docker Image to GitHub Packages
-        run: |
-          docker push ghcr.io/${{ github.repository_owner }}/watchit:latest
+        run: docker push ghcr.io/${{ github.repository_owner }}/watchit:latest
 
       - name: Set up Docker Compose
         run: |
-          docker-compose up -d 
+          docker compose up -d
           sleep 10
 
       - name: Install dependencies
@@ -57,4 +56,4 @@ jobs:
 
       - name: Tear down Docker Compose
         if: always()
-        run: docker-compose down
+        run: docker compose down
