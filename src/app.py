@@ -17,12 +17,14 @@ movie_service = MovieService(db["movies"])
 #Create a logs directory if it doesn't exist
 # Log directory configuration
 if os.getenv("TEST_ENV"):
-    log_dir = tempfile.gettempdir()  # Use temporary directory for logs in test environment
+    # Archivo temporal exclusivo para logs en entorno de pruebas
+    temp_log = tempfile.NamedTemporaryFile(delete=False, suffix=".log")
+    log_file = temp_log.name
 else:
+    # Directorio de logs estándar para producción
     log_dir = "logs"
     os.makedirs(log_dir, exist_ok=True)
-    
-log_file = os.path.join(log_dir, "watchit.log")
+    log_file = os.path.join(log_dir, "watchit.log")
 
 # Basic logging configuration
 logging.basicConfig(

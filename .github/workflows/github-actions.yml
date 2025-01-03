@@ -54,11 +54,6 @@ jobs:
           source .venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Ensure writable temp directory for logs
-        run: |
-          mkdir -p /tmp
-          chmod -R 777 /tmp
-
       - name: Set environment variable for tests
         run: |
           echo "TEST_ENV=true" >> $GITHUB_ENV
