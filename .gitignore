@@ -1,4 +1,19 @@
+# Python
 __pycache__/
- 
 .pytest_cache/
+*.pyc
+
+# Logs
 logs/
+*.log
+
+# Data
+data/
+*.json
+
+# Docker
+*.env
+docker-compose.override.yml
+docker-compose.yml
+Dockerfile
+volumes/

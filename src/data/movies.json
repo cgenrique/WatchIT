@@ -164,5 +164,17 @@
         "rating": 9.7,
         "title": "The Godfather",
         "id": 28
+    },
+    {
+        "genre": "Sci-Fi",
+        "rating": 7.8,
+        "title": "Tenet",
+        "id": 29
+    },
+    {
+        "genre": "Crime",
+        "rating": 9.7,
+        "title": "The Godfather",
+        "id": 30
     }
 ]

@@ -1,14 +1,19 @@
 import os
 from flask import Flask, jsonify, request
-import json
 import logging
 
-from src.services.movie_service import MovieService
+from pymongo import MongoClient
+
+from services.movie_service import MovieService
 
 
 app = Flask(__name__)
 
-movie_service = MovieService()
+MONGO_URI = "mongodb://mongodb:27017" if os.getenv("DOCKERIZED") == "true" else "mongodb://localhost:27017"
+client = MongoClient(MONGO_URI)
+db = client["watchit_db"]
+
+movie_service = MovieService(db["movies"])
 
 #Create a logs directory if it doesn't exist
 log_dir = "logs"
@@ -82,7 +87,7 @@ def add_movie():
         new_movie = request.get_json()
         logger.info(f"Attempting to add new movie: {new_movie}")
         added_movie = movie_service.add_movie(new_movie)
-        logger.info(f"Successfully added movie with ID: {added_movie['id']}")
+        logger.info("Successfully added movie.")
         return jsonify(added_movie), 201
     
     except ValueError as e:
@@ -90,4 +95,4 @@ def add_movie():
         return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
