@@ -35,9 +35,6 @@ jobs:
           CR_PAT: ${{ secrets.CR_PAT }}
         run: echo "${CR_PAT}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: List files in workspace
-        run: ls -la
-
       - name: Build Docker Image
         working-directory: .
         run: |
@@ -56,6 +53,11 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt
+
+      - name: Set up writable logs directory
+        run: |
+          mkdir -p logs
+          chmod -R 777 logs
 
       - name: Run tests
         run: |
