@@ -71,3 +71,11 @@ class MovieService:
         result = self.collection.insert_one(new_movie)
         new_movie["_id"] = str(result.inserted_id)  # Convert _id to string
         return new_movie
+    
+    def add_movie_to_list(self, movie, list_name):
+        movie["list"] = list_name
+        self.collection.insert_one(movie)
+
+    def get_movies_from_list(self, list_name):
+        return list(self.collection.find({"list": list_name}, {"_id": 0}))
+

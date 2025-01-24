@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="/" class="navbar-logo">  
+            🍿 WatchIT 🎥
+        </a>
+        <div class="navbar-links">
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/lists">My Lists</a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Powered by:</p>
+        <img src="/static/images/tmdb_logo.svg" alt="TMDB Logo" class="tmdb-logo">
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+    </footer>
+</body>
+</html>

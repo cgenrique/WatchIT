@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="search-container">
+    <h1>Welcome to WatchIT!</h1>
+    <form class="search-form" action="/movies/search" method="get">
+        <input type="text" id="query" name="query" placeholder="Search for a movie..." required>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+{% if movies %}
+<div class="results">
+    {% for movie in movies %}
+        <div class="card">
+            <a href="/movies/details/{{ movie.id }}">
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/250x375?text=No+Image" alt="No image available">
+                {% endif %}
+                <h3><a href="/movies/details/{{ movie.id }}">{{ movie.title }}</a></h3>
+                <p><strong>Release:</strong> {{ movie.release_date }}</p>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% elif error %}
+<p style="color: red; text-align: center;">Error: {{ error }}</p>
+{% endif %}
+{% endblock %}

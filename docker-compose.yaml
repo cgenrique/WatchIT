@@ -13,6 +13,8 @@ services:
     environment:
       - FLASK_ENV=development
       - DOCKERIZED=true
+    env_file:
+      - .env
     depends_on:
       - mongodb
 

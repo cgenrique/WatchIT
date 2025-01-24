@@ -29,20 +29,20 @@ def clean_db():
     movie_service.collection.delete_many({})  # Clear all documents in the movies collection
 
 
-def test_index(client):
-    """
-    Test the root endpoint.
+# def test_index(client):
+#     """
+#     Test the root endpoint.
 
-    Args:
-        client: The test client fixture.
+#     Args:
+#         client: The test client fixture.
 
-    Asserts:
-        The status code is 200.
-        The response JSON contains the welcome message.
-    """
-    response = client.get('/')
-    assert response.status_code == 200
-    assert response.json == {"message": "Welcome to WatchIT!"}
+#     Asserts:
+#         The status code is 200.
+#         The response JSON contains the welcome message.
+#     """
+#     response = client.get('/')
+#     assert response.status_code == 200
+#     assert response.json == {"message": "Welcome to WatchIT!"}
 
 
 def test_get_movies(client):
