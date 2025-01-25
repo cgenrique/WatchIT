@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="lists-container">
+    <h1>My Lists</h1>
+
+    {% for list_name, movies in lists.items() %}
+    <div class="list">
+        <h2>{{ list_name | capitalize }}</h2>
+        <div class="movies-grid">
+            {% for movie in movies %}
+            <div class="movie-card">
+                <!-- Cambiar href para redireccionar correctamente -->
+                <a href="/movies/details/{{ movie['id'] }}" class="movie-link" data-movie-id="{{ movie['id'] }}">
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie['poster_path'] }}" alt="{{ movie['title'] }}">
+                    <h3>{{ movie['title'] }}</h3>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".movie-link");
+
+        links.forEach(link => {
+            link.addEventListener("click", async function (event) {
+                event.preventDefault();
+                const movieId = this.getAttribute("data-movie-id");
+                const token = localStorage.getItem("access_token");
+
+                if (!token) {
+                    alert("You need to login first.");
+                    window.location.href = "/login";
+                    return;
+                }
+
+                try {
+                    // Fetch los detalles de la película
+                    const response = await fetch(`/movies/details/${movieId}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Renderizar la página de detalles
+                        const html = await response.text();
+                        document.open();
+                        document.write(html);
+                        document.close();
+                        // Cambiar la URL manualmente
+                        history.pushState(null, "", `/movies/details/${movieId}`);
+                    } else {
+                        const error = await response.json();
+                        alert(error.error || "Failed to fetch movie details.");
+                    }
+                } catch (err) {
+                    alert("Error fetching movie details.");
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

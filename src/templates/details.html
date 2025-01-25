@@ -3,11 +3,7 @@
 {% block content %}
 <div class="details-container">
     <div class="poster">
-        {% if movie.poster_path %}
-            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
-        {% else %}
-            <img src="https://via.placeholder.com/500x750?text=No+Image" alt="No image available">
-        {% endif %}
+        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path or '' }}" alt="{{ movie.title }}">
     </div>
     <div class="details-content">
         <h1>{{ movie.title }}</h1>
@@ -15,10 +11,74 @@
         <p><strong>Rating:</strong> {{ movie.vote_average }}/10 ({{ movie.vote_count }} votes)</p>
         <p><strong>Overview:</strong> {{ movie.overview }}</p>
         <div class="actions">
-            <a href="/movies/add_to_list?movie_id={{ movie.id }}&list=favorites" class="button">Add to Favorites</a>
-            <a href="/movies/add_to_list?movie_id={{ movie.id }}&list=watched" class="button">Mark as Watched</a>
-            <a href="/movies/add_to_list?movie_id={{ movie.id }}&list=to_watch" class="button">Add to Watchlist</a>
+            {% for list_name, in_list in lists_status.items() %}
+            <button
+                class="button {% if in_list %}remove{% else %}add{% endif %}"
+                data-list="{{ list_name }}"
+                data-action="{% if in_list %}remove{% else %}add{% endif %}">
+                {% if in_list %}Remove from {{ list_name | capitalize }}{% else %}Add to {{ list_name | capitalize }}{% endif %}
+            </button>
+            {% endfor %}
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".actions .button");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", async function (event) {
+            event.preventDefault();
+
+            const listName = button.dataset.list;
+            const action = button.dataset.action;
+            const movieId = parseInt("{{ movie.id }}", 10); // Convierte a entero
+            const token = localStorage.getItem("access_token");
+
+            if (!token) {
+                alert("You need to log in to manage your lists.");
+                return;
+            }
+
+            if (!listName || isNaN(movieId)) {
+                console.error("Invalid list name or movie ID.");
+                alert("Something went wrong. Please try again.");
+                return;
+            }
+
+            const endpoint = action === "add" ? "/movies/add_to_list" : "/movies/remove_from_list";
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ movie_id: movieId, list: listName })
+                });
+
+                if (response.ok) {
+                    const newAction = action === "add" ? "remove" : "add";
+                    button.dataset.action = newAction;
+                    button.classList.toggle("add");
+                    button.classList.toggle("remove");
+                    button.textContent = newAction === "add"
+                        ? `Add to ${listName}`
+                        : `Remove from ${listName}`;
+                } else {
+                    const error = await response.json();
+                    console.error("Error updating the list:", error);
+                    alert(error.error || "Failed to update the list.");
+                }
+            } catch (err) {
+                console.error("Error updating the list:", err);
+                alert("An error occurred while updating the list.");
+            }
+        });
+    });
+});
+
+</script>
 {% endblock %}

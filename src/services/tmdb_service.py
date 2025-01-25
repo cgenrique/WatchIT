@@ -2,13 +2,18 @@ import os
 import requests
 from dotenv import load_dotenv
 
-# Cargar variables de entorno
+# Load environment variables from .env file
 load_dotenv()
 
+# Get the TMDb access token from the environment variables
 TMDB_ACCESS_TOKEN = os.getenv("TMDB_ACCESS_TOKEN")
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
 class TMDbService:
+    """
+    A service class for interacting with The Movie Database (TMDb) API.
+    Provides methods for searching movies and retrieving detailed movie information.
+    """
     def __init__(self):
         if not TMDB_ACCESS_TOKEN:
             raise ValueError("Access token for TMDb is missing")
