@@ -27,7 +27,8 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)  # Token expires in 
 jwt = JWTManager(app)
 
 # MongoDB setup
-MONGO_URI = "mongodb://mongodb:27017" if os.getenv("DOCKERIZED") == "true" else "mongodb://localhost:27017"
+#MONGO_URI = "mongodb://mongodb:27017" if os.getenv("DOCKERIZED") == "true" else "mongodb://localhost:27017"
+MONGO_URI = os.getenv("DATABASE_URL", "mongodb://localhost:27017")
 client = MongoClient(MONGO_URI)
 db = client["watchit_db"]
 
